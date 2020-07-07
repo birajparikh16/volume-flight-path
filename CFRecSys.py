@@ -20,9 +20,6 @@ from scipy.sparse.linalg import svds
 
 import copy
 
-import warnings
-warnings.filterwarnings("ignore")
-
 from CRUD import DatabaseConnection
 
 """
@@ -59,7 +56,6 @@ class CFRecSys(DatabaseConnection):
             print ("Error while creating PostgreSQL table --> ", error)
 
     def dropRecSysTable(self):
-
         try:
             drop_table_command = 'DROP TABLE "CFRecSys"'
             self.cursor.execute(drop_table_command)
@@ -90,11 +86,9 @@ class CFRecSys(DatabaseConnection):
 
     def createUtilityMatrix(self, df_rating):
         """ Function to create a utility matrix """
-
         # pivoting the data with the ratings values
         utility_matrix = df_rating.pivot_table(values='Rating', index='UserNickname', 
                                                columns='Product_ID').fillna(0.0)
-        
         return utility_matrix
 
     def estimatePredictedRatings(self, utility_matrix):
@@ -116,7 +110,6 @@ class CFRecSys(DatabaseConnection):
     def precomputeRecsys(self):
     
         """ Function to get recommendations for the concerned user
-    
         Args:
             users - list: set of similar users
             n - int: Number of recommendations to give

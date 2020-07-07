@@ -106,24 +106,4 @@ def recommend(df, connection):
                             'BrandCategory': BrandCategory, 'ProductTags': ProductTags, 'Description': Description,
                             'Ingredients': Ingredients, 'Blurb': Blurb, 'Review1': str(R1), 'Review2': str(R2), 'Review3': str(R3)})
 
-    #print(d)
     return d
-   
-
-
-
-# SQL_Quey = """
-# SELECT Product_ID
-# FROM `precomputed_recommendations`
-# COPY {}
-# FROM '{}'
-# ACCESS_KEY_ID '{{}}'
-# SECRET_ACCESS_KEY '{{}}'
-# IGNOREHEADER 1
-# DELIMITER ','
-# """
-
-# COPY_MONTHLY_TRIPS_SQL = COPY_SQL.format(
-#     "trips",
-#     "s3://udacity-dend/data-pipelines/divvy/partitioned/{year}/{month}/divvy_trips.csv"
-# )

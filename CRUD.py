@@ -22,7 +22,6 @@ from pprint import pprint
 from config import config
 params = config()
 
-
 class DatabaseConnection:
     
     def __init__(self):
@@ -98,7 +97,6 @@ class DatabaseConnection:
 
     def insert_records(self, filename, tablename):
         """ This function copy product ids csv file to the ProductIDs table"""
-        
         try:
             # find the path for the product id csv file
             csv_file = self.os_dir_search(filename)
@@ -165,58 +163,11 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as error:
             print ("Error while deleting records --> ", error)
 
-
-# if __name__== '__main__':
-#     database_connection = DatabaseConnection()
-#     database_connection.create_table()
-#     database_connection.insert_records("sephora_product_ids.csv", "ProductIDs")
+if __name__== '__main__':
+    database_connection = DatabaseConnection()
+    database_connection.create_table()
+    database_connection.insert_records("sephora_product_ids.csv", "ProductIDs")
     #database_connection.update_prod_id_table('2020-07-22', 'P447597')
     #database_connection.drop_table("ProductIDs")
     #database_connection.delete_records("ProductIDs", "P447597")
     #database_connection.insert_new_prodids()
-
-
-"""
-
-def some_function(a):
-    b = '"' + a + '"'
-    return b
-
-if __name__ == '__main__':
-    a = 'apple'
-    b = some_function(a)
-    print(b)
-    
-    
-def create_database(DB_URL):
-    #create database - apothecary_db
-
-    try:
-        # conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT);
-        engine = create_engine(DB_URL, isolation_level="AUTOCOMMIT")
-        conn = engine.raw_connection()
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'apothecary_db'")
-
-        exists = cursor.fetchone()
-        if not exists:
-            cursor.execute(sql.SQL("CREATE DATABASE {}").format(
-                sql.Identifier(POSTGRES_DB))
-            )
-        else:
-            pass
-
-        # close communication with the PostgreSQL database server
-        cursor.close()
-        # commit the changes
-        conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        
-        print ("Error while creating PostgreSQL table", error)
-        print("creating database error")
-    finally:
-        if conn is not None:
-            conn.close()
-            print("PostgreSQL connection is closed")
-"""

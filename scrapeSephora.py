@@ -58,7 +58,6 @@ class scrapeSephora(DatabaseConnection):
         stop = total_reviews + 100
         #numelements = int((stop-start)/float(limit))
         flags = 0
-        
         output = []
         
         for i in range(start, stop, limit):
@@ -78,12 +77,10 @@ class scrapeSephora(DatabaseConnection):
                     ImageUrl = lookup['ImageUrl']
                     ProductPageUrl = lookup['ProductPageUrl']
                     AverageOverallRating = lookup['ReviewStatistics']['AverageOverallRating']
-
                     RecommendedCount = lookup['ReviewStatistics']['RecommendedCount']
                     NotRecommendedCount = lookup['ReviewStatistics']['NotRecommendedCount']
                     TotalReviewCount = lookup['ReviewStatistics']['TotalReviewCount']
                     PercentApproval = round((RecommendedCount / TotalReviewCount) * 100, 2)
-
                     HelpfulVoteCount = lookup['ReviewStatistics']['HelpfulVoteCount']
                     NotHelpfulVoteCount = lookup['ReviewStatistics']['NotHelpfulVoteCount']
                     
@@ -153,7 +150,6 @@ class scrapeSephora(DatabaseConnection):
 
                             SubmissionTime = datetime.strptime(result['SubmissionTime'].split("T")[0], '%Y-%m-%d').date()
 
-
                             output.append((product_id, Name, Brand, Description, ImageUrl, ProductPageUrl, AverageOverallRating, RecommendedCount, 
                                            NotRecommendedCount, TotalReviewCount, PercentApproval, HelpfulVoteCount, NotHelpfulVoteCount, 
                                            TagDistribution, SkinConcerns, UserNickname, Rating, IsRecommended, Avatar, ReviewText, SkinType, EyeColor,
@@ -171,7 +167,6 @@ class scrapeSephora(DatabaseConnection):
 
         return output
 
-
     def scrape(self):
 
         limit = 1
@@ -185,9 +180,7 @@ class scrapeSephora(DatabaseConnection):
             LastProcessedDate = row['LastProcessedDate']
             
             print('-'*75)
-
             print("\nAPI Request for Product ID: ", product_id)
-            
             print("\nLastProcessedDate from csv: ", LastProcessedDate)
 
             # URL for requesting api

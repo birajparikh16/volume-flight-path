@@ -21,12 +21,8 @@ import psycopg2.extras as extras
 from config import config
 params = config()
 
-import warnings
-warnings.filterwarnings("ignore")
-
 from datetime import date
 CurrentDate = date.today()
-
 
 class masterData(DatabaseConnection):
 
@@ -83,7 +79,6 @@ class masterData(DatabaseConnection):
             print ("Error while creating PostgreSQL table --> ", error)
     
     def dropMasterTable(self):
-
         try:
             drop_table_command = 'DROP TABLE ' + f'"MasterData"'
             self.cursor.execute(drop_table_command)
@@ -125,8 +120,6 @@ class masterData(DatabaseConnection):
     def readProductData(self):
         
         filepath = "./data/"
-
-        
         cols = ['Category', 'Brand', 'Name', 'Full Size Price', 'Trial available? (Y/N)', 'If trial (Y), price', 
                 'Brand Category (prestige, pharmacy, clinical, k+j beauty, indie)', 'Ingredients', 'Blurb', 
                 'Preference Tags (Fragrance-free, Cruelty-free, Silicone/Paraben/Sulfate-free, Alcohol-free) + should add essential oil-free',
@@ -135,7 +128,6 @@ class masterData(DatabaseConnection):
         # Product database
         #df = pd.read_excel(filepath + 'product/' + 'product database.xlsx', sheet_name= "prod+tags+ingred", usecols = cols)
         df = pd.read_csv(filepath + 'product/' + 'product database.csv', usecols = cols)
-        
         df = preprocess_product_db(df)
 
         return df
@@ -147,8 +139,9 @@ class masterData(DatabaseConnection):
         'SkinConcerns', 'UserNickname', 'Rating', 'IsRecommended', 'ReviewText', 'SkinType', 'ReviewerSkinconcern', 'SkinTone', 'Age']
         
         review_df = review_df[cols]
+        # Preprocess review database
         review_df = preprocess_review_db(review_df)
-
+        # Read product database
         product_df = self.readProductData()
 
         df = pd.merge(left=review_df, right=product_df, how='left', on='Name')
@@ -172,7 +165,6 @@ class masterData(DatabaseConnection):
 if __name__ == "__main__":
 
     m = masterData()
-
     m.createMasterTable()
 
     connection = psycopg2.connect(**params)
@@ -183,20 +175,4 @@ if __name__ == "__main__":
     else:
         m.main()
 
-    #m.createMasterTable()
     #m.dropMasterTable()
-    
-    
-"""
--- SIMILAR TO '%(cruelty-free|clean skincare|fragrance-free)%';
-
-
--- LIKE any(array['%cruelty-free%','%clean skincare%','%fragrance-free%']);
-
--- like any(array['%Khairpur%','%clean skincare%','%Karachi%']);
-
-WHERE (Product_Tags LIKE '%cruelty-free%' OR
-       name LIKE '%fragrance-free%' OR
-       name LIKE '%clean skincare%')
-
-"""

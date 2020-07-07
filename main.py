@@ -12,13 +12,13 @@ from fastapi import FastAPI, Query, Path, Body
 from pydantic import BaseModel
 from typing import List, Tuple
 
-#from config import PORT
-#from personalized_recsys2 import recommend
 import pandas as pd
 import json
+import sys
+
+from personalized_recsys import recommend
 
 import psycopg2
-
 # Import the 'config' funtion from the config.py file
 from config import config
 params = config()
@@ -27,8 +27,6 @@ connection = psycopg2.connect(**params)
 # Create a new cursor
 cursor = connection.cursor()
 connection.autocommit = True
-
-from personalized_recsys import recommend
 
 # Initializing an api
 app = FastAPI()
@@ -49,9 +47,7 @@ class Data(BaseModel):
 @app.get("/")
 async def root():
   return {"message": "Apothecary welcomes you!"}
-  #filtered_df.to_dict()
   
-
 @app.post("/")
 async def recommendations(data: Data):
 
@@ -107,7 +103,9 @@ async def recommendations(data: Data):
     else:
       brand_preference = " OR ".join(["{0} LIKE '%{1}%'".format('"BrandCategory"', w) for w in data.brand_preference])
   except:
-    pass
+    print("\nRequest values are not correct")
+    sys.exit()
+
   # Query to find set of similar users
   query = f"""SELECT * FROM "MasterData" 
             WHERE "SkinType" = '{data.skin_type}' 
@@ -121,18 +119,9 @@ async def recommendations(data: Data):
             AND ({personal_preference}) 
             AND ({brand_preference})
             ;"""
-  
-  print(query)
+
   filtered_df = pd.read_sql_query(query, connection)
-
-  print(filtered_df['Category'].value_counts())
-  print("\n")
-  #print(filtered_df.columns)
-
-  print(filtered_df.shape)
-
   df = recommend(filtered_df, connection)
-
   return df
 
 if __name__ == "__main__":
