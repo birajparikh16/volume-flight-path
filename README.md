@@ -1,4 +1,4 @@
-# recommender_system
+# Personalized Recommender system
 This repository has all the codes and files for recommender system.
 
 **The Pipeline Layer**
