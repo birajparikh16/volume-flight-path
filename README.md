@@ -15,7 +15,7 @@
 **microservice API**
 
 1. FASTAPI is used to create a microservice API which accepts the list of flight routes and return the unique flight path of the person.
-2. Heroku is used to host the API
+2. Heroku is used to host the API.
 
 <b>API Deployment link -</b> https://volume-flight-path.herokuapp.com/
 
