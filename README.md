@@ -26,11 +26,13 @@
 3. Hover the cursor on the <b>"Try it out"</b> and click.
 4. Update the response body with the list of flight routes.\
 For example:
+```
 {
   "routes": [
     ["IND", "EWR"], ["SFO", "ATL"], ["GSO", "IND"], ["ATL", "GSO"]
   ]
 }
+```
 5. Finally click on <b>"Execute"</b> and API returns the result in the Response body.
 
 P.S: While submitting the request to the API please use double quotes as mentioned in the example in step 4.
