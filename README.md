@@ -32,3 +32,5 @@ For example:
   ]
 }
 5. Finally click on <b>"Execute"</b> and API returns the result in the Response body.
+
+P.S: While submitting the request to the API please use double quotes as mentioned in the example in step 4.
