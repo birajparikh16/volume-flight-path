@@ -1,15 +1,17 @@
-# Personalized Recommender system
+# Volume Python Take-Home Test
 This repository has all the codes and files for recommender system.
 
-**The Pipeline Layer**
+**Task** 
 
-1. database.ini - This file will contain the credentials to the database
-2. config.py - This script reads in the database.ini file and returns the connection parameters as a dictionary.
-3. preprocessing.py - This script does all the preprocessing of the review text.
-4. CRUD.py - This script does the CRUD operation. It creates the Reviews and ProductIDs table.
-5. scrapeSephora.py - This script scrapes the sephora product reviews for a given product ids in the ProductIDs table and finally insert the records in the Reviews table.
-6. master_data.py - This script creates a structured (master) data upon which filtering can be applied based on the consultation questions and inserts the cleaned/structured records on the MasterData table.
-7. CFRecSys.py - This script perform the SVD computation for the recommender system and inserts the records in the CFRecSys table.
+Story: There are over 100,000 flights a day, with millions of people and cargo being transferred around the world. With so many people, and different carrier/agency groups it can be hard to track where a person might be. In order to determine the flight path of a person, we must sort through all of their flight records.
+
+Goal: To create a microservice API that can help us understand and track how a particular person’s flight path may be queried. The API should accept a request that includes a list of flights, which are defined by a source and destination airport code. These flights may not be listed in order and will need to be sorted to find the total flight paths starting and ending airports.
+
+Examples: 
+[['SFO', 'EWR']]                                                                    => ['SFO', 'EWR']
+[['ATL', 'EWR'], ['SFO', 'ATL']]                                               => ['SFO', 'EWR']
+[['IND', 'EWR'], ['SFO', 'ATL'], ['GSO', 'IND'], ['ATL', 'GSO']] => ['SFO', 'EWR']
+
 
 **API Layer**
 
